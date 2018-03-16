@@ -1,18 +1,18 @@
 package labs3;
 
+import java.util.ArrayList;
+
 public class Bank {
 
-	private static Customer[] customers = new Customer[1000];
-	private static int numOfClients = 0;	
+	private  ArrayList<Customer> customers = new ArrayList<>();
+	private  int numOfClients = 0;	
 	static Bank bank = new Bank();
 	
-	private Bank() {
-			
-	}
+	private Bank() {}
 	
-	public static Customer getCustomer(int custNo) {
-	if(custNo<customers.length)
-		return customers[custNo];
+	public  Customer getCustomer(int custNo) {
+	if(custNo<customers.size())
+		return customers.get(custNo);
 	return null;
 	}
 	
@@ -21,15 +21,15 @@ public class Bank {
 		 
 	}
 	
-	public static void addCustomer(Customer newCustomer) {
-		customers[numOfClients] =newCustomer;
+	public void addCustomer(Customer newCustomer) {
+		customers.add(newCustomer);
 		numOfClients++;
 	}
 
 	/**
 	 * @return the numOfClients
 	 */
-	public static int getNumOfClients() {
+	public int getNumOfClients() {
 		return numOfClients;
 	}
 	

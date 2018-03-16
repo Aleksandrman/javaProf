@@ -47,12 +47,12 @@ public boolean deposit(double amt) {
 /**
  * method to withdraw money	
  * @param amt a positive amount of money
+ * @throws OverdraftException 
  */
 
 
-public boolean withdraw(double amt) {
+public boolean withdraw(double amt) throws Exception{
 	if(amt<=balance) {
-		balance -= amt;
 		return true;
 	}
 	return false;
