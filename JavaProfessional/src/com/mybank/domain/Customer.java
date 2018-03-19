@@ -1,4 +1,4 @@
-package labs3;
+package com.mybank.domain;
 
 import java.util.ArrayList;
 
@@ -14,6 +14,24 @@ private static int costumerNumberBase = 1000;
 private int numOfAccounts;
 
 
+/**
+ * @return the firstName
+ */
+public String getFirstName() {
+	return firstName;
+}
+/**
+ * @return the lastName
+ */
+public String getLastName() {
+	return lastName;
+}
+/**
+ * @return the numOfAccounts
+ */
+public int getNumOfAccounts() {
+	return numOfAccounts;
+}
 public Customer(String firstName,String lastName) {
 	accounts  = new ArrayList<>();
 	this.firstName = firstName;

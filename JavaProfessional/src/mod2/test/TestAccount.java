@@ -1,11 +1,11 @@
 package mod2.test;
 
-import labs3.Account;
-import labs3.Bank;
-import labs3.CheckingAccount;
-import labs3.Customer;
-import labs3.OverdraftException;
-import labs3.SavingsAccount;
+import com.mybank.domain.Account;
+import com.mybank.domain.Bank;
+import com.mybank.domain.CheckingAccount;
+import com.mybank.domain.Customer;
+import com.mybank.domain.OverdraftException;
+import com.mybank.domain.SavingsAccount;
 
 public class TestAccount {
 public static void main(String[] args) {

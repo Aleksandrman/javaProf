@@ -1,4 +1,4 @@
-package labs3;
+package com.mybank.domain;
 
 /**
  * @author chag

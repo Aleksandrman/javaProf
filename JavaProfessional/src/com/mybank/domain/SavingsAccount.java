@@ -1,4 +1,4 @@
-package labs3;
+package com.mybank.domain;
 
 public class SavingsAccount extends Account{
 	private double interestRate;

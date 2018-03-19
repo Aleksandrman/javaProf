@@ -1,4 +1,4 @@
-package labs3;
+package com.mybank.domain;
 /**
  * bank Account class
  * @author Aleksandrman the balance
