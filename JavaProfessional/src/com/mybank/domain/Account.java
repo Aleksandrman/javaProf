@@ -53,8 +53,9 @@ public boolean deposit(double amt) {
 
 public boolean withdraw(double amt) throws Exception{
 	if(amt<=balance) {
+		balance -= amt;
 		return true;
 	}
-	return false;
+	throw new OverdraftException(amt - balance, "Error! Insufficlient funds!");
 }
 } // end class

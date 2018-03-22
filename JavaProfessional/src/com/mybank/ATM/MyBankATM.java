@@ -28,13 +28,16 @@ public class MyBankATM extends JFrame {
 
 	Bank myBank;
 	Customer currentCustomer;
-	Account	currentAccount;
+	Account	currentAccount; 
 	
 	private JPanel panel_2;
 	private JPanel contentPane;
 	private JTextField amountField;
 	private JTextField statusField;
 	private JTextArea historyArea;
+	private JButton balanceButton;
+	private JButton depositButton;
+	private JButton withdrawButton;
 
 	/**
 	 * Launch the application.
@@ -112,7 +115,7 @@ public class MyBankATM extends JFrame {
 		setAlwaysOnTop(true);
 		setTitle("my bank ATM");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 617, 305);
+		setBounds(100, 100, 700, 301);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -126,17 +129,70 @@ public class MyBankATM extends JFrame {
 		panel.add(panel_1);
 		panel_1.setLayout(new GridLayout(4, 1, 0, 0));
 		
-		JButton balanceButton = new JButton("Check account balance");
+		balanceButton = new JButton("Check account balance");
+		balanceButton.setEnabled(false);
 		balanceButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
+				
+				historyArea.append("Balance of "+ currentCustomer.getFirstName()+ " first account is $ "+ currentAccount.getBalance());
+				if (currentAccount instanceof CheckingAccount) {
+					historyArea.append(". This is a Checking Account with overdraft protection $" + ((CheckingAccount)currentAccount).getOverdraftAmount() +  "\n");
+				}
+				else 
+					historyArea.append(". This is a Saving Account with interest rate " + ((SavingsAccount)currentAccount).getInterestRate()+ "%\n");
+			statusField.setText("READY");
+			
 			}
+			
 		});
 		panel_1.add(balanceButton);
 		
-		JButton depositButton = new JButton("Make a deposit");
+		depositButton = new JButton("Make a deposit");
+		depositButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+				double amt = Double.parseDouble(amountField.getText());
+				currentAccount.deposit(amt);
+				historyArea.append("Deposit: $"+ amt + ", new balance is $ " +currentAccount.getBalance()+ "\n");
+				statusField.setText("READY");
+				}
+				
+				catch (Exception ex) {
+					statusField.setText("ERROR");
+					historyArea.append("ERROR: can't complete deposit operation\n");
+				}
+				amountField.setText("");	
+				
+			
+			}
+		});
+		depositButton.setEnabled(false);
 		panel_1.add(depositButton);
 		
-		JButton withdrawButton = new JButton("Make a withdrawal");
+		withdrawButton = new JButton("Make a withdrawal");
+		withdrawButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					double amt = Double.parseDouble(amountField.getText());
+					if (currentAccount.withdraw(amt)) {
+						historyArea.append("Withdraw: $"+ amt + ", new balance is $ " +currentAccount.getBalance()+ "\n");	
+					}
+					statusField.setText("READY");					
+					}
+					catch(OverdraftException ex) {
+						historyArea.append("ERROR: Insufficient funds!\n");
+						statusField.setText("ERROR");
+					}
+					catch (Exception ex) {
+						statusField.setText("ERROR");
+						historyArea.append("ERROR: can't complete deposit operation\n");
+					}
+				amountField.setText("");
+				
+			}
+			
+		});
+		withdrawButton.setEnabled(false);
 		panel_1.add(withdrawButton);
 		
 		amountField = new JTextField();
@@ -178,19 +234,26 @@ public class MyBankATM extends JFrame {
 		panel_2.add(zeroButton);
 		
 		JButton pointButton = new JButton(".");
-//		dummyButton.setEnabled(false);
 		panel_2.add(pointButton);
 		
 		JButton enterButton = new JButton("Enter");
-		enterButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		enterButton.addActionListener((ActionEvent e)-> {
+			
 				int customerID = 0;
 				
 				try {
-					customerID = Integer.parseInt(amountField.getText());
+				customerID = Integer.parseInt(amountField.getText());
 				currentCustomer = myBank.getCustomer(customerID);
+				currentAccount = currentCustomer.getAccount(0);	
+				
 				historyArea.append("Customer with ID = "+ customerID+ " is "+ currentCustomer.getLastName()
 				+ " "+ currentCustomer.getFirstName()+ "\n");
+				statusField.setText("Customer: "+ currentCustomer.getLastName()	+ " "+ currentCustomer.getFirstName());
+				balanceButton.setEnabled(true);
+				depositButton.setEnabled(true);
+				withdrawButton.setEnabled(true);
+				enterButton.setEnabled(false);
+				
 				}
 				catch(Exception ex) {
 					historyArea.append("ERROR: Customer not found! or wrong Customer ID \n");	
@@ -198,7 +261,7 @@ public class MyBankATM extends JFrame {
 				
 				
 				amountField.setText("");
-			}
+			
 		});
 		panel_2.add(enterButton);
 		

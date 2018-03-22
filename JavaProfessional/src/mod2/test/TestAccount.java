@@ -26,11 +26,11 @@ public static void main(String[] args) {
 	myBank.addCustomer(secondCustomer);
 	
 	System.out.println(myBank.getCustomer(0));
-	System.out.println(myBank.getCustomer(1));
+//	System.out.println(myBank.getCustomer(1));
 	
-	myBank.getCustomer(0).getAccount(0).deposit(2000);
+//	myBank.getCustomer(0).getAccount(0).deposit(2000);
 	try {
-		myBank.getCustomer(0).getAccount(1).withdraw(7500);
+		myBank.getCustomer(0).getAccount(0).withdraw(1500);
 	}
 	catch (OverdraftException e) {
 		System.out.println(e.getMessage()+ ": $"+ e.getDeficit()+"!\n");
@@ -40,10 +40,10 @@ public static void main(String[] args) {
 		// TODO Auto-generated catch block
 		System.out.println("Something went wrong");
 	}
-	((SavingsAccount) myBank.getCustomer(0).getAccount(0)).addInterstRate();
+//	((SavingsAccount) myBank.getCustomer(0).getAccount(0)).addInterstRate();
 	System.out.println("");
 	System.out.println(myBank.getCustomer(0));
-	System.out.println(myBank.getCustomer(1));
+//	System.out.println(myBank.getCustomer(1));
 	
 }   
 }
